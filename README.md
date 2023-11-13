@@ -49,6 +49,33 @@ See the [WASM Postflop repository] for more detailed comparisons, including some
     - If you have a CPU without AVX2 support, you can modify `src-tauri/.cargo/config.toml` and build it yourself.
   - Apple silicon: M1 and later
 
+### Running in a cloud instance
+
+It is useful to run in a cloud instance to use a more powerful machine.
+
+To set up on Google Cloud Platform:
+
+1. Create your instance with:
+    ```sh
+gcloud compute instances create poker-solver \
+  --project=poker-solver-405011 \
+  --service-account=1024438207503-compute@developer.gserviceaccount.com \
+  --zone=us-west1-b \
+  --machine-type=c2-standard-30 \
+  --network-interface=network-tier=PREMIUM,stack-type=IPV4_ONLY,subnet=default \
+  --maintenance-policy=MIGRATE \
+  --provisioning-model=STANDARD \
+  --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append \
+  --create-disk=auto-delete=yes,boot=yes,device-name=instance-1,image=projects/ubuntu-os-pro-cloud/global/images/ubuntu-pro-2204-jammy-v20231102,mode=rw,size=32,type=projects/poker-solver-405011/zones/us-west1-b/diskTypes/pd-balanced \
+  --no-shielded-secure-boot \
+  --shielded-vtpm \
+  --shielded-integrity-monitoring \
+  --labels=goog-ec-src=vm_add-gcloud \
+  --reservation-affinity=any
+    ```
+
+Set up the instance by following 
+
 ## Download
 
 You can download the app from the [GitHub releases page].
